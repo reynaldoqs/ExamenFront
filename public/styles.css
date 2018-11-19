@@ -1,0 +1,9 @@
+body::-webkit-scrollbar-thumb {
+    background: hsla(0,0%,100%,.2);
+    border-radius: 5px;
+}
+body::-webkit-scrollbar {
+    background: var(--fondo);
+    height: 5px;
+    width: 5px;
+}

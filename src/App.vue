@@ -6,4 +6,5 @@
 
 <style>
 @import "./design/colores.css";
+
 </style>
