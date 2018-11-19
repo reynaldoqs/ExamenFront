@@ -1,11 +1,8 @@
-
-import mainRoutes from './routes.js'
 import { routes as moduleB } from '@/moduloB'
-/*
-import { routes as moduleB } from '@/moduloVisitante'
-*/
+import { routes as moduleA } from '@/moduloA'
 
-let routes = [...mainRoutes, ...moduleB]
+
+let routes = [...moduleB, ...moduleA];
 
 console.log('rutassssssssss', routes);
 import Vue from 'vue'

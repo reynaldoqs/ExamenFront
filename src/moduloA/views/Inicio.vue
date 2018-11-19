@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>Inicio</h2>
+    <h1>ModuloA > unicio</h1>
   </div>
 </template>
-

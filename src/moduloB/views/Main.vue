@@ -1,10 +1,10 @@
 <template>
   <div class="modulo-b">
-    <router-view name="moduloB"/> 
+    <router-view/> 
   </div>
 </template>
 <style scoped>
-.modulo-b{
+.modulo-b {
   width: 100%;
   height: 100vh;
   overflow: hidden;

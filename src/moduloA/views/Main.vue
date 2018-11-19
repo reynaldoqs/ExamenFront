@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>Inicio</h2>
+    <router-view name="moduloA"/> 
   </div>
 </template>
-

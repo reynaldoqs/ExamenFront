@@ -1,9 +1,9 @@
 import Axios from 'axios'
-import { BASE_URL } from '@/config'
+//import { BASE_URL } from '@/config'
 //import store from '@/stores/stores'
-import { httpManager } from '@/shared/utils'
+//import { httpManager } from '@/shared/utils'
 
-Axios.defaults.baseURL = BASE_URL
+//Axios.defaults.baseURL = BASE_URL
 Axios.defaults.headers.common.Accept = 'application/json'
 /* Axios.interceptors.response.use(response => response, _check.errorManager)
 

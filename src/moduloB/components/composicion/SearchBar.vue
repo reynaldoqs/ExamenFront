@@ -41,7 +41,6 @@
                 color="#603AFF"
                 class="dark-theme full-size"
                 v-model="select3"
-                icon="cloud"
                 multiple
                 autocomplete
                 max-selected=6
@@ -69,7 +68,7 @@
         <div class="parametros-container">
             <parametro  v-for="(chip,index) in chips" :key="index" :nombre="chip" tipo="entrada" ubicacion="header"/> 
             <parametro  nombre="Authorizacion" tipo="entrada" ubicacion="query"/>  
-            <parametro  nombre="CodigoAresa" tipo="entrada" ubicacion="patha"/>  
+            <parametro  nombre="CodigoAresa" tipo="entrada" ubicacion="path"/>  
             <parametro  nombre="Nitrsato" tipo="entrada" ubicacion="body"/>  
         </div>
         <hr class="separator">
@@ -93,90 +92,83 @@
     </div>
 </template>
 <script>
-import Parametro from './Parametro'
+import Parametro from "./SearchBarParametro";
 export default {
-    data:()=>({
-        value1:"",
-        select2:1,
-        select3:[],
-        options2:[
-            {text: 'Parametro', value: 1},
-            {text: 'Descripcion', value: 2},
-            {text: 'Palabras Clave', value: 3},
-        ],
-        options3:[ 
-        {text: 'Ruex', value: 1},
-        {text: 'Senavex', value: 2},
-        {text: 'Fundempresa', value: 3},
-        {text: 'Fondo de desarrollo rural', value: 4},
-        {text: 'Triangle', value: 5},
-        {text: 'Polygon', value: 6},
-        {text: 'Regular polygon', value: 7},
-        {text: 'Circumference', value: 8},
-        {text: 'Circle', value: 9},
-        {text: 'Circular sector', value: 10},
-        {text: 'Circular trapeze', value: 11},
-        ],
-        chips:[
-        "Vuejs",
-        "Node",
-        "Vuesax",
-        "Angular",
-        "Fundation",
-        "Flutter"
-        ],
-        servicios:[
-            "Servicio de indentificacion",
-            "Servicio de desarrollo rural",
-            "Servicio de impuestos",
-            "Registro unico de exportadores",
-            "Servicio de Fundempresa"
-        ]
-    }),
-    components:{
-        Parametro
-    },
-    methods: {
-    remove (item) {
-      this.chips.splice(this.chips.indexOf(item), 1)
+  data: () => ({
+    value1: "",
+    select2: 1,
+    select3: [],
+    options2: [
+      { text: "Parametro", value: 1 },
+      { text: "Descripcion", value: 2 },
+      { text: "Palabras Clave", value: 3 }
+    ],
+    options3: [
+      { text: "Ruex", value: 1 },
+      { text: "Senavex", value: 2 },
+      { text: "Fundempresa", value: 3 },
+      { text: "Fondo de desarrollo rural", value: 4 },
+      { text: "Triangle", value: 5 },
+      { text: "Polygon", value: 6 },
+      { text: "Regular polygon", value: 7 },
+      { text: "Circumference", value: 8 },
+      { text: "Circle", value: 9 },
+      { text: "Circular sector", value: 10 },
+      { text: "Circular trapeze", value: 11 }
+    ],
+    chips: ["Vuejs", "Node", "Vuesax", "Angular", "Fundation", "Flutter"],
+    servicios: [
+      "Servicio de indentificacion",
+      "Servicio de desarrollo rural",
+      "Servicio de impuestos",
+      "Registro unico de exportadores",
+      "Servicio de Fundempresa"
+    ]
+  }),
+  components: {
+    Parametro
+  },
+  methods: {
+    remove(item) {
+      this.chips.splice(this.chips.indexOf(item), 1);
     }
   }
-}
+};
 </script>
 
 <style scoped>
-.search-bar{
-    width: 100%;
-    height: 100%;
-    background-color: var(--bg-search);
-    padding: 14px;
+.search-bar {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-search);
+  padding: 14px;
 }
-.search-options:not(:last-child){
-    margin-bottom: 12px;
+.search-options:not(:last-child) {
+  margin-bottom: 12px;
 }
-.parametros-container{
-    padding: 15px 0 0 0;
-    display: block;
-    width: 100%;
+.parametros-container {
+  padding: 15px 0 0 0;
+  display: block;
+  width: 100%;
 }
-.small-list{
-    color: #8181c1;
-    font-size: .9em;
-    cursor: pointer;
-    line-height: 1.8em;
-    display: block; 
-    margin-right: 5px;
+.small-list {
+  color: #8181c1;
+  font-size: 0.9em;
+  cursor: pointer;
+  line-height: 1.8em;
+  display: block;
+  margin-right: 5px;
 }
-.small-list:hover{
-    text-decoration: underline;
+.small-list:hover {
+  text-decoration: underline;
 }
-.small-list:not(:last-child)::after{
-    content: ", "
+.small-list:not(:last-child)::after {
+  content: ", ";
 }
-.no-result-message{
-    font-size: 10px;
-    margin-top:10px;
-    margin-bottom: 10px;
-    color: #717181;
+.no-result-message {
+  font-size: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #717181;
 }
 </style>

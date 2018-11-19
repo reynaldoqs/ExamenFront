@@ -5,27 +5,52 @@
             <search-bar/>
         </div>
         <div class="right">
-            <parametros-list/>
+            <parametros-list
+            :parametros="parametros"
+            @onSelect="selectParametro"
+            />
         </div>
        </div>
     </div>
 </template>
 <script>
-import SearchBar from './SearchBar'
-import ParametrosList from './ParametrosList'
+import SearchBar from "./SearchBar";
+import ParametrosList from "./ParametrosList";
+import { composicionApi } from "@/services";
 export default {
-    components:{
-        SearchBar,
-        ParametrosList
+  data: () => ({
+    parametros: []
+  }),
+  methods: {
+    selectParametro(parametro) {
+      alert(parametro);
     }
-}
+  },
+  mounted() {
+    composicionApi.parametros().then(data => {
+      this.parametros = data.data;
+      console.log(data);
+    });
+  },
+  components: {
+    SearchBar,
+    ParametrosList
+  }
+};
 </script>
 
 <style scoped>
-.composicion-list{
-    display: flex;
+.composicion-list {
+  display: flex;
+  --left-width: 460px;
 }
-.left{
-    width: 500px;
+.left {
+  width: var(--left-width);
+}
+.right {
+  width: calc(100% - var(--left-width));
+  max-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 </style>
