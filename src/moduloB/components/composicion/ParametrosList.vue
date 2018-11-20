@@ -1,6 +1,6 @@
 <template>
     <div class="parametros-list">
-        <h4>Parámetros registrados: {{parametros.length}}</h4>
+        <h4 v-show="parametros.length > 0">Parámetros registrados: {{parametros.length}}</h4>
         <template v-for="(parametro, index) in parametros">
             <parametros-list-item
             :parametro="parametro"

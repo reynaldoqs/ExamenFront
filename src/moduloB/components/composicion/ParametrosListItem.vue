@@ -1,7 +1,7 @@
 <template>
     <div class="parametro-item">
         <div>
-            <vs-button @click="$emit('onSelect', parametro)" radius color="success" type="gradient" size="small" icon="add"></vs-button>
+            <vs-button @click="$emit('onSelect', parametro)" radius color="success" type="border" size="small" icon="add"></vs-button>
         </div>
        <div class="parametros-information">
             <div>

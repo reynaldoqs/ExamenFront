@@ -6,7 +6,9 @@
         size="normal"
         class="dark-theme full-size" 
         placeholder="Buscar..."
-        v-model="value1"/>
+        v-model="query"
+        @keyup.enter="sendQuery"
+        />
         <hr class="separator">
         <vs-row
         class="search-options"
@@ -21,9 +23,9 @@
                 <vs-select
                 color="#603AFF"
                 class="dark-theme full-size"
-                v-model="select2"
+                v-model="searchBy"
                     >
-                    <vs-select-item v-for="(item,index) in options2" :key="index" :value="item.value" :text="item.text"  />
+                    <vs-select-item v-for="(item,index) in searchOptions" :key="index" :value="item.value" :text="item.text"  />
                 </vs-select>
             </vs-col>
         </vs-row>
@@ -40,13 +42,13 @@
                 <vs-select
                 color="#603AFF"
                 class="dark-theme full-size"
-                v-model="select3"
+                v-model="filterBy"
                 multiple
                 autocomplete
                 max-selected=6
                 placeholder="Filtar por servicios"
                     >
-                    <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in options3" />
+                    <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in filterOptions" />
                 </vs-select>
             </vs-col>
         </vs-row>
@@ -56,38 +58,57 @@
             Parametros de Salida
         </div>
         <div class="parametros-container">
-            <parametro  v-for="(chip,index) in chips" :key="index" :nombre="chip" tipo="respuesta" ubicacion="header"/> 
-            <parametro  nombre="Authorizacion" tipo="respuesta" ubicacion="query"/>  
-            <parametro  nombre="CodigoAresa" tipo="respuesta" ubicacion="patha"/>  
-            <parametro  nombre="Nitrsato" tipo="respuesta" ubicacion="body"/>  
+            <div v-show="!parametrosSalida.length > 0" class="no-result-message">
+                No tiene parámetros seleccionados
+            </div>
+            <parametro
+            v-for="parametro in parametrosSalida"
+            :key="parametro._id"
+            :nombre="parametro.nombre"
+            tipo="respuesta" ubicacion="body"
+            @onDelete="$emit('onDelete',parametro._id)"
+            /> 
         </div> 
         <hr class="separator">
         <div class="label-text">
             Parametros de entrada
         </div>
         <div class="parametros-container">
-            <parametro  v-for="(chip,index) in chips" :key="index" :nombre="chip" tipo="entrada" ubicacion="header"/> 
-            <parametro  nombre="Authorizacion" tipo="entrada" ubicacion="query"/>  
-            <parametro  nombre="CodigoAresa" tipo="entrada" ubicacion="path"/>  
-            <parametro  nombre="Nitrsato" tipo="entrada" ubicacion="body"/>  
+            <div v-show="!parametrosSalida.length > 0" class="no-result-message">
+                No tiene parámetros de entrada
+            </div>
+            <parametro  v-for="parametro in parametrosEntrada" :key="parametro._id" :nombre="parametro.nombre" tipo="entrada" :ubicacion="parametro.ubicacion"/> 
         </div>
         <hr class="separator">
         <div class="label-text">
             Servicios
         </div>
         <div class="parametros-container">
+            <div v-show="!serviciosSeleccionados.length > 0" class="no-result-message">
+                No tiene parámetros seleccionados
+            </div>
             <span
-            v-for="(servicio, index) in servicios"
+            v-for="(servicio, index) in serviciosSeleccionados"
             :key="index"
             class="small-list">
             {{servicio}}</span>
         </div>
         <hr class="separator">
         <div class="label-text">
-            Servicios
+            Rutas
         </div>
-        <div class="no-result-message">
-            No tiene servicios registrados
+        <div class="parametros-container">
+            <div v-show="!rutasSeleccionadas.length > 0" class="no-result-message">
+                No tiene parámetros seleccionados
+            </div>
+            <span
+                v-for="(ruta, index) in rutasSeleccionadas"
+                :key="index"
+                class="small-list">
+            {{ruta}}</span>
+        </div>
+        <div class="gosht-div">
+
         </div>
     </div>
 </template>
@@ -95,15 +116,15 @@
 import Parametro from "./SearchBarParametro";
 export default {
   data: () => ({
-    value1: "",
-    select2: 1,
-    select3: [],
-    options2: [
+    query: "",
+    searchBy: 1,
+    filterBy: [],
+    searchOptions: [
       { text: "Parametro", value: 1 },
       { text: "Descripcion", value: 2 },
       { text: "Palabras Clave", value: 3 }
     ],
-    options3: [
+    filterOptions: [
       { text: "Ruex", value: 1 },
       { text: "Senavex", value: 2 },
       { text: "Fundempresa", value: 3 },
@@ -115,31 +136,74 @@ export default {
       { text: "Circle", value: 9 },
       { text: "Circular sector", value: 10 },
       { text: "Circular trapeze", value: 11 }
-    ],
-    chips: ["Vuejs", "Node", "Vuesax", "Angular", "Fundation", "Flutter"],
-    servicios: [
-      "Servicio de indentificacion",
-      "Servicio de desarrollo rural",
-      "Servicio de impuestos",
-      "Registro unico de exportadores",
-      "Servicio de Fundempresa"
     ]
   }),
-  components: {
-    Parametro
+  props: {
+    composicionModel: Object
   },
   methods: {
-    remove(item) {
-      this.chips.splice(this.chips.indexOf(item), 1);
+    sendQuery() {
+      if (this.query && this.query !== "") {
+        this.$emit("onQuery", {
+          query: this.query,
+          searchBy: this.searchBy,
+          filterBy: this.filterBy
+        });
+        return;
+      }
+      console.warn("empty");
     }
+  },
+  computed: {
+    parametrosSalida() {
+      if (this.composicionModel.rutas.length > 0) {
+        return this.composicionModel.rutas
+          .map(ruta => {
+            return ruta.parametrosRespuesta.map(
+              param => param.parametroRespuesta
+            );
+          })
+          .reduce((count, item) => [...count, ...item]);
+      }
+      return [];
+    },
+    parametrosEntrada() {
+      if (this.composicionModel.rutas.length > 0) {
+        return this.composicionModel.rutas
+          .map(ruta => {
+            return ruta.parametrosEntrada;
+          })
+          .reduce((count, item) => [...count, ...item]);
+      }
+      return [];
+    },
+    serviciosSeleccionados() {
+      if (this.composicionModel.rutas.length > 0) {
+        let servicios = this.composicionModel.rutas.map(ruta => ruta.servicio);
+        return servicios.filter((item, pos) => servicios.indexOf(item) == pos);
+      }
+      return [];
+    },
+    rutasSeleccionadas() {
+      if (this.composicionModel.rutas.length > 0) {
+        return this.composicionModel.rutas.map(ruta => ruta.ruta.nombre);
+      }
+      return [];
+    }
+  },
+  components: {
+    Parametro
   }
 };
 </script>
 
 <style scoped>
+.gosht-div {
+  height: 40px;
+}
 .search-bar {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   background-color: var(--bg-search);
   padding: 14px;
 }

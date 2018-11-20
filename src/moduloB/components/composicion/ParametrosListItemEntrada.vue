@@ -38,7 +38,7 @@ export default {
 <style scoped>
 .parametro {
   background-color: var(--bg-search);
-  margin: 4px 6px;
+  margin: 4px 5px;
   display: inline-block;
   width: auto;
   padding: 5px 8px;
@@ -57,7 +57,7 @@ export default {
 }
 .requerido {
   position: absolute;
-  background-color: var(--red);
+  background-color: var(--green);
   color: white;
   font-size: 8px;
   padding: 2px 4px;

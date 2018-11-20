@@ -5,7 +5,7 @@
                 {{nombre}}
             </div>
             <div>
-                <div v-show="tipo === 'respuesta'" class="icon-container">
+                <div @click.stop="$emit('onDelete')" v-show="tipo === 'respuesta'" class="icon-container">
                     <vs-icon v-show="tipo === 'respuesta'" class="iop-icon" icon="delete"></vs-icon>
                 </div>
                 <div v-show="tipo === 'entrada'" class="char-container">
