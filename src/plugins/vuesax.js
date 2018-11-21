@@ -5,13 +5,13 @@ import 'vuesax/dist/vuesax.css'
 
 
 let configuration = {
-    theme:{
-        colors:{
-            primary:'#600349',
-            success:'rgb(23, 201, 100)',
-            danger:'rgb(242, 19, 93)',
-            warning:'rgb(255, 130, 0)',
-            dark:'#151616'
+    theme: {
+        colors: {
+            primary: '#600349',
+            success: 'rgb(23, 201, 100)',
+            danger: '#ff4f81',
+            warning: '#fd7e14',
+            dark: '#151616'
         }
     }
 }

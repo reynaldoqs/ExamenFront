@@ -1,27 +1,38 @@
 <template>
     <div class="search-bar">
-        <vs-input icon="search"
-        description-text="Busqueda de parametros"
-        icon-after="true"
-        size="normal"
-        class="dark-theme full-size" 
-        placeholder="Buscar..."
-        v-model="query"
-        @keyup.enter="sendQuery"
-        />
-        <hr class="separator">
+        <vs-row
+          class="search-options"
+          vs-align="center"
+          vs-type="flex" vs-justify="flex-start" vs-w="12">
+        <vs-col vs-type="flex" vs-justify="flex-start" vs-align="center" vs-w="4">
+          <div class="label-text">
+            Buscar parámetro:
+          </div>
+        </vs-col> 
+        <vs-col vs-type="flex" vs-justify="flex-start" vs-align="center" vs-w="8">
+          <vs-input icon="search"
+          icon-after="true"
+          size="normal"
+          class="dark-theme full-size" 
+          vs-placeholder="Buscar..."
+          placeholder="Buscar..."
+          v-model="query"
+          @keyup.enter="sendQuery"
+          />
+        </vs-col>
+        </vs-row>
         <vs-row
         class="search-options"
         vs-align="center"
         vs-type="flex" vs-justify="flex-start" vs-w="12">
-            <vs-col vs-type="flex" vs-justify="flex-start" vs-align="center" vs-w="5">
+            <vs-col vs-type="flex" vs-justify="flex-start" vs-align="center" vs-w="4">
                 <div class="label-text">
                     Busqueda por:
                 </div>
             </vs-col>
-            <vs-col vs-type="flex" vs-justify="flex-start" vs-align="center" vs-w="7">
+            <vs-col vs-type="flex" vs-justify="flex-start" vs-align="center" vs-w="8">
                 <vs-select
-                color="#603AFF"
+                color="primary"
                 class="dark-theme full-size"
                 v-model="searchBy"
                     >
@@ -29,29 +40,19 @@
                 </vs-select>
             </vs-col>
         </vs-row>
-        <vs-row
-        class="search-options"
-        vs-align="center"
-        vs-type="flex" vs-justify="flex-start" vs-w="12">
-            <vs-col vs-type="flex" vs-justify="flex-start" vs-align="center" vs-w="5">
-                <div class="label-text">
-                    Filtrar servicios:
-                </div>
-            </vs-col>
-            <vs-col vs-type="flex" vs-justify="flex-start" vs-align="center" vs-w="7">
-                <vs-select
-                color="#603AFF"
-                class="dark-theme full-size"
-                v-model="filterBy"
-                multiple
-                autocomplete
-                max-selected=6
-                placeholder="Filtar por servicios"
-                    >
-                    <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in filterOptions" />
-                </vs-select>
-            </vs-col>
-        </vs-row>
+        <hr class="separator">
+        <vs-select
+            description-text="Selección de servicios"
+            color="primary"
+            class="dark-theme full-size"
+            v-model="filterBy"
+            multiple
+            autocomplete
+            max-selected=4
+            placeholder="Filtrar servicios"
+            >
+        <vs-select-item :key="servicio._id" :value="servicio._id" :text="servicio.nombre" v-for="servicio in servicios" />
+        </vs-select>
 
         <hr class="separator">
         <div class="label-text">
@@ -108,7 +109,9 @@
             {{ruta}}</span>
         </div>
         <div class="gosht-div">
-
+          <pre>
+            {{parametrosEntrada}}
+          </pre>
         </div>
     </div>
 </template>
@@ -123,38 +126,36 @@ export default {
       { text: "Parametro", value: 1 },
       { text: "Descripcion", value: 2 },
       { text: "Palabras Clave", value: 3 }
-    ],
-    filterOptions: [
-      { text: "Ruex", value: 1 },
-      { text: "Senavex", value: 2 },
-      { text: "Fundempresa", value: 3 },
-      { text: "Fondo de desarrollo rural", value: 4 },
-      { text: "Triangle", value: 5 },
-      { text: "Polygon", value: 6 },
-      { text: "Regular polygon", value: 7 },
-      { text: "Circumference", value: 8 },
-      { text: "Circle", value: 9 },
-      { text: "Circular sector", value: 10 },
-      { text: "Circular trapeze", value: 11 }
     ]
   }),
   props: {
-    composicionModel: Object
+    composicionModel: Object,
+    serviciosList: Array
+  },
+  watch: {
+    filterBy(newValue) {
+      this.$emit("filterChange", this.filterBy);
+    }
   },
   methods: {
     sendQuery() {
       if (this.query && this.query !== "") {
         this.$emit("onQuery", {
           query: this.query,
-          searchBy: this.searchBy,
-          filterBy: this.filterBy
+          searchBy: this.searchBy
         });
         return;
       }
-      console.warn("empty");
+      console.warn("query is empty");
     }
   },
   computed: {
+    servicios() {
+      let controllers = this.serviciosList.filter(data => data);
+      return controllers.filter(
+        (item, pos) => controllers.map(a => a._id).indexOf(item._id) == pos
+      );
+    },
     parametrosSalida() {
       if (this.composicionModel.rutas.length > 0) {
         return this.composicionModel.rutas
@@ -169,17 +170,21 @@ export default {
     },
     parametrosEntrada() {
       if (this.composicionModel.rutas.length > 0) {
-        return this.composicionModel.rutas
+        let allParametros = this.composicionModel.rutas
           .map(ruta => {
             return ruta.parametrosEntrada;
           })
           .reduce((count, item) => [...count, ...item]);
+
+        return allParametros;
       }
       return [];
     },
     serviciosSeleccionados() {
       if (this.composicionModel.rutas.length > 0) {
-        let servicios = this.composicionModel.rutas.map(ruta => ruta.servicio);
+        let servicios = this.composicionModel.rutas.map(
+          ruta => ruta.servicio.nombre
+        );
         return servicios.filter((item, pos) => servicios.indexOf(item) == pos);
       }
       return [];

@@ -9,7 +9,7 @@ export default {
   guardarComposicion(data) {
     const { idPerfil, composicion } = data;
     let body = Object.assign(composicion, { perfil: idPerfil });
-    console.log('elbody', body);
+  
     let url = 'http://localhost:3000/v1/composicion';
     return new Promise((resolve, reject) => {
       axios.post(url, body).then(data => resolve(data.data)).catch(err => reject(err.response))

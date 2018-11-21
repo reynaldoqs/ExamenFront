@@ -4,15 +4,18 @@
         <div class="left">
             <search-bar
             :composicionModel="composicionModel"
+            :serviciosList="serviciosList"
             @onQuery="search"
             @onDelete="deleteParametro"
+            @filterChange="filterChanged"
             />
-            <vs-button @click="saveComposicion" :disabled="!composicionModel.rutas.length > 0" class="save-option" radius size="large"  color="success" type="gradient" icon="save"></vs-button>
+            <vs-button @click.stop="openSaveComposicion" :disabled="!composicionModel.rutas.length > 0" class="save-option" radius size="large"  color="success" type="gradient" icon="save"></vs-button>
         </div>
         <div class="right vs-con-loading__container" id="parametros-list" >
-            <parametros-list
-            
+            <parametros-list     
             :parametros="parametros"
+            :serviciosFilter="serviciosFilter"
+            :query="query"
             @onSelect="selectParametro"
             />
         </div>
@@ -25,25 +28,35 @@ import ParametrosList from "./ParametrosList";
 import { composicionApi } from "@/services";
 export default {
   data: () => ({
+    colorAlert: "primary",
     userParametros: [],
-    parametros: []
+    parametros: [],
+    serviciosList: [],
+    serviciosFilter: [],
+    query: {}
   }),
   methods: {
-    saveComposicion() {
+    filterChanged(data) {
+      this.serviciosFilter = data;
+    },
+    search(query) {
+      this.query = query;
+    },
+    openSaveComposicion() {
+      this.$hub.$emit("open-modal");
+      this.$hub.$emit("set-modal-data", {}, "Guardar Composicion", "success");
+    },
+    saveComposicion(data) {
+      const { nombre, descripcion } = data;
       let idPerfil = "5bd21b2277e73d38dfc5edf2";
-
       let clonModel = JSON.parse(JSON.stringify(this.composicionModel));
-
-      clonModel.nombre = "rutaHechaFront";
-      clonModel.descripcion = "Descripcion front";
-
       let composicionToSave = {
-        nombre: clonModel.nombre,
-        descripcion: clonModel.descripcion,
+        nombre: nombre,
+        descripcion: descripcion,
         rutas: clonModel.rutas.map(rata => {
           return {
             ruta: rata.ruta._id,
-            servicio: rata.servicio,
+            servicio: rata.servicio._id,
             parametrosEntrada: rata.parametrosEntrada.map(p => p._id),
             parametrosRespuesta: rata.parametrosRespuesta.map(p => ({
               parametroRespuesta: p.parametroRespuesta._id
@@ -51,6 +64,7 @@ export default {
           };
         })
       };
+
       composicionApi
         .guardarComposicion({
           idPerfil,
@@ -63,17 +77,17 @@ export default {
             color: "#28a745",
             icon: "verified_user"
           });
-          console.log("resp server", data);
+          //guadar en el store aqui
+          this.userParametros = [];
         })
         .catch(err => {
           this.$vs.notify({
-            title: "Error al guardar",
+            title: "Error al guardar composición",
             text: err.data.message,
-            color: "#ff4f81",
-            icon: "verified_user"
+            color: "danger",
+            icon: "error",
+            time: 8000
           });
-
-          console.log("resp err server", err);
         });
     },
     deleteParametro(id) {
@@ -81,9 +95,6 @@ export default {
       if (index !== -1) {
         this.userParametros.splice(index, 1);
       }
-    },
-    search(query) {
-      alert(JSON.stringify(query));
     },
     selectParametro(parametro) {
       let selectedObj = JSON.parse(JSON.stringify(parametro));
@@ -95,7 +106,12 @@ export default {
     },
     checkAndPush(anArray, anObject) {
       if (anArray.find(data => data._id === anObject._id)) {
-        alert("Ya tienes seleccionado este parametro");
+        this.$vs.dialog({
+          color: "danger",
+          title: "Error",
+          text: "Ya tienes este parámetro seleccionado",
+          acceptText: "Aceptar"
+        });
         return;
       }
       anArray.push(anObject);
@@ -110,6 +126,9 @@ export default {
       composicionApi
         .parametros()
         .then(data => {
+          this.serviciosList = data.data.map(
+            data => data.idRespuesta.idRuta.idServicio
+          );
           this.parametros = data.data;
           this.$vs.loading.close("#parametros-list > .con-vs-loading");
         })
@@ -166,10 +185,14 @@ export default {
   },
   mounted() {
     this.loadParametros();
+    this.$hub.$on("saveComposicion", this.saveComposicion);
   },
   components: {
     SearchBar,
     ParametrosList
+  },
+  destroyed() {
+    this.$hub.$off("saveComposicion");
   }
 };
 </script>

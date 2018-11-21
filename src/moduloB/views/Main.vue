@@ -1,8 +1,9 @@
 <template>
   <div class="modulo-b">
-    <router-view/> 
+    <router-view/>
   </div>
 </template>
+
 <style scoped>
 .modulo-b {
   width: 100%;

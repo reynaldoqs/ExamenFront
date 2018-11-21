@@ -13,4 +13,7 @@
     --info: #00aeff;
     --warning: #ffc168;
     --danger: #ff4f81;
+    --modal-padding: 5px 10px;
+    --app-text-primary: rgb(46, 61, 73);
+    --app-text-secondary: rgb(125, 151, 173);
 }
