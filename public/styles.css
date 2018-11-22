@@ -2,12 +2,12 @@
 body{
     font-family:'Roboto', Arial, Helvetica, sans-serif;
 }
-body::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background: hsla(0,0%,100%,.2);
     border-radius: 5px;
 }
-body::-webkit-scrollbar {
-    background:red;
+::-webkit-scrollbar {
+    background: #231f34;
     height: 5px;
     width: 5px;
 }

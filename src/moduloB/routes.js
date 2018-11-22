@@ -1,7 +1,7 @@
 export default [
   {
     path: '/',
-    redirect: 'modulo-b'
+    redirect: 'login'
   },
   {
     path: '*',
@@ -9,31 +9,16 @@ export default [
     component: () => import('@/shared/components/NotFound.vue')
   },
   {
-    path: '/modulo-b',
-    component: () => import('@/moduloB/views/Main.vue'),
-    children: [
-      {
-        path: '/',
-        redirect: 'inicio'
-      },
-      {
-        path: 'inicio',
-        name: 'inicio',
-        component: () => import('@/moduloB/views/Inicio.vue')
+    path: '/inicio',
+    name: 'inicio',
+    component: () => import('@/moduloB/views/Inicio.vue')
 
-      },
-      {
-        path: 'login',
-        name: 'login',
-        component: () => import('@/moduloB/views/Login.vue')
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/moduloB/views/Login.vue')
 
-      },
-      {
-        path: 'composicion',
-        name: 'composicion',
-        component: () => import('@/moduloB/views/Composicion.vue')
+  },
 
-      },
-    ]
-  }
 ]

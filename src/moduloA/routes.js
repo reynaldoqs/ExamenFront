@@ -13,6 +13,13 @@ export default [
         components: {
           moduloA: () => import('@/moduloA/views/Inicio.vue')
         }
+      },
+      {
+        path: 'composicion',
+        name: 'composicion',
+        components: {
+          moduloA: () => import('@/moduloA/views/Composicion.vue')
+        }
       }
     ]
   }

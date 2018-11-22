@@ -1,5 +1,5 @@
 <template>
-    <div class="parametros-list">
+    <div class="parametros-list dark-theme">
       <pre>
         {{serviciosFilter}}
         {{query}}
@@ -32,7 +32,7 @@ export default {
   computed: {
     parametrosList() {
       //hacer un smart filtrador
-      /*       if (this.serviciosFilter.length > 0) {
+      if (this.serviciosFilter.length > 0) {
         let parametrosFiltered = this.parametros.filter(parametro => {
           return parametro.idRespuesta.idRuta.idServicio
             ? this.serviciosFilter.includes(
@@ -42,9 +42,10 @@ export default {
         });
 
         return parametrosFiltered;
-      } */
+      }
       //ordenado por nombre
-      return this.parametros.sort((item, next) => {
+      let parametrosAor = this.parametros;
+      return parametrosAor.sort((item, next) => {
         return (
           item.nombre.toString().toLowerCase() >
           next.nombre.toString().toLowerCase()

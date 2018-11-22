@@ -9,11 +9,25 @@
     --green: #28a745;
     --teal: #20c997;
     --cyan: #17a2b8;
-    --primary: #00aeff;
     --info: #00aeff;
     --warning: #ffc168;
     --danger: #ff4f81;
-    --modal-padding: 5px 10px;
+
+
     --app-text-primary: rgb(46, 61, 73);
     --app-text-secondary: rgb(125, 151, 173);
+
+
+    --dialog-bg:#232033;
+/*   --bg-content: #232033; */
+    --bg-content: #2c2741;
+    --bg-view:  #232033;
+    --bg-inputs: #17132e;
+
+    --text-color: #d1d1d1;
+    --text-small: #455575;
+    /* Colores iop */
+    --iop-primary:#360023;
+    --iop-secondary:#ed6d64;
+    --iop-accent:#600349;
 }

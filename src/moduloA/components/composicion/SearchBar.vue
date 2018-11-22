@@ -1,5 +1,5 @@
 <template>
-    <div class="search-bar">
+    <div class="search-bar dark-theme">
         <vs-row
           class="search-options"
           vs-align="center"
@@ -13,7 +13,7 @@
           <vs-input icon="search"
           icon-after="true"
           size="normal"
-          class="dark-theme full-size" 
+          class="full-size" 
           vs-placeholder="Buscar..."
           placeholder="Buscar..."
           v-model="query"
@@ -33,7 +33,7 @@
             <vs-col vs-type="flex" vs-justify="flex-start" vs-align="center" vs-w="8">
                 <vs-select
                 color="primary"
-                class="dark-theme full-size"
+                class="full-size"
                 v-model="searchBy"
                     >
                     <vs-select-item v-for="(item,index) in searchOptions" :key="index" :value="item.value" :text="item.text"  />
@@ -44,7 +44,7 @@
         <vs-select
             description-text="Selección de servicios"
             color="primary"
-            class="dark-theme full-size"
+            class="full-size"
             v-model="filterBy"
             multiple
             autocomplete
@@ -209,7 +209,7 @@ export default {
 .search-bar {
   width: 100%;
   min-height: 100%;
-  background-color: var(--bg-search);
+  background-color: var(--bg-content);
   padding: 14px;
 }
 .search-options:not(:last-child) {
