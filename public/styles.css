@@ -2,6 +2,9 @@
 body{
     font-family:'Roboto', Arial, Helvetica, sans-serif;
 }
+button::-moz-focus-inner {
+  border: 0;
+}
 ::-webkit-scrollbar-thumb {
     background: hsla(0,0%,100%,.2);
     border-radius: 5px;

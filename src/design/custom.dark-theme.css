@@ -5,8 +5,8 @@ body .con-vs-dialog .vs-dialog-dark {
 body .con-vs-dialog ~ #app {
   /*   -webkit-filter: blur(3px);
   filter: blur(3px); */
-  -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);
+  -webkit-filter: grayscale(85%);
+  filter: grayscale(85%);
 }
 body .con-vs-dialog .vs-dialog header {
   background-color: transparent;

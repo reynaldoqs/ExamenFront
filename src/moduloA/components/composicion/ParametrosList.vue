@@ -29,6 +29,25 @@ export default {
       type: Object
     }
   },
+  methods: {
+    searchByParametro(anArray, query) {
+      console.log("el query", query.query);
+
+      if (query.query) {
+        console.log("retormanos la busqueda", query.query);
+        return anArray.filter(param => {
+          return param.nombre.toLowerCase().includes(query.query.toLowerCase());
+        });
+      }
+      return anArray;
+    },
+    searchByDescripcion(anArray, query) {
+      return [];
+    },
+    searchByPalabrasClave(anArray, query) {
+      return [];
+    }
+  },
   computed: {
     parametrosList() {
       //hacer un smart filtrador
@@ -40,17 +59,22 @@ export default {
               )
             : false;
         });
-
-        return parametrosFiltered;
-      }
-      //ordenado por nombre
-      let parametrosAor = this.parametros;
-      return parametrosAor.sort((item, next) => {
-        return (
-          item.nombre.toString().toLowerCase() >
-          next.nombre.toString().toLowerCase()
+        parametrosFiltered = this.searchByParametro(
+          parametrosFiltered,
+          this.query
         );
-      });
+        /* parametrosFiltered = this.searchByDescripcion(parametrosFiltered);
+        parametrosFiltered = this.searchByPalabrasClave(parametrosFiltered); */
+        return parametrosFiltered;
+      } else {
+        let parametrosAor = this.parametros;
+        return parametrosAor.sort((item, next) => {
+          return (
+            item.nombre.toString().toLowerCase() >
+            next.nombre.toString().toLowerCase()
+          );
+        });
+      }
     }
   },
   components: {

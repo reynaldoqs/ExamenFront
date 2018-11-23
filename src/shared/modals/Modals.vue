@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import GuardarComposicion from "@/moduloB/components/composicion/modal.ComposicionSave";
+import GuardarComposicion from "@/moduloA/components/composicion/modal.ComposicionSave";
 export default {
   data() {
     return {

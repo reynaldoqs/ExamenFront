@@ -2,20 +2,19 @@
 <div>
     <div class="login-bg"></div>
     <div class="login dark-theme">
-        <section>
-          
+        <section class="login-container">
             <img src="../../assets/logo.png" alt="">
             <div class="icons-example">
-                <vs-input icon="account_circle" class="dark-input login-input"  placeholder="Usuario" v-model="usuario"/>
-                <vs-input icon="lock" class="dark-input login-input"  placeholder="Contraseña" v-model="clave"/>
-                <vs-button @click="login" class="dark-button" size="small" type="gradient" color="success" >INGRESAR</vs-button>
+                <vs-input @keyup.enter="login" :disabled="!editable" icon="account_circle" class="dark-input login-input"  placeholder="Usuario" v-model="usuario"/>
+                <vs-input @keyup.enter="login" :disabled="!editable" icon="lock" class="dark-input login-input" type="password"  placeholder="Contraseña" v-model="clave"/>
+                <vs-button @click="login" :disabled="!isValid || !editable" class="dark-button" size="small" type="gradient" color="success" >INGRESAR</vs-button>
                
             </div>
             <a href="#">¿Olvidaste tu contraseña?</a>
             <a href="#">Registrarse</a>
         </section>
-        <footer>
-            iop
+        <footer class="login-footer">
+            <iop-footer/>
         </footer>
     </div>
 
@@ -25,30 +24,45 @@
 export default {
   data() {
     return {
+      editable: true,
       usuario: "",
       clave: ""
     };
   },
+  computed: {
+    isValid() {
+      return this.usuario.length > 0 && this.clave.length > 0;
+    }
+  },
   methods: {
     login() {
+      this.editable = false;
       this.$store
         .dispatch("login", { usuario: this.usuario, clave: this.clave })
         .then(data => {
           this.$vs.notify({
-            title: "Composición guardara",
-            text: "la composicion ha sido guardada con exito",
+            title: "Logeo exitoso",
+            text: "el ingreso fue exitoso",
             color: "#28a745",
             icon: "verified_user"
           });
+          this.editable = true;
+          setTimeout(() => {
+            this.$router.push({
+              name: "perfil",
+              query: { perfil: "selection" }
+            });
+          }, 200);
         })
         .catch(err => {
           this.$vs.notify({
-            title: "Error en el login",
-            text: "normalito",
+            title: "Ucurrio un error en el logeo!",
+            text: err,
             color: "danger",
             icon: "error",
-            time: 218000
+            time: 8000
           });
+          this.editable = true;
         });
     }
   }
@@ -88,7 +102,7 @@ export default {
   top: 0;
   left: 0;
 }
-section {
+section.login-container {
   background-color: var(--bg-content);
   width: 320px;
   margin: 70px 0 0 0;
@@ -102,10 +116,6 @@ img {
   margin-bottom: 20px;
 }
 
-p {
-  margin: 80px 0 20px 0;
-  font-size: 0.9em;
-}
 a {
   display: block;
   color: silver;
@@ -116,11 +126,8 @@ a:last-child {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-footer {
+footer.login-footer {
   width: 100%;
-  background-color: black;
-  text-align: center;
-  padding: 10px;
-  color: var(--iop-secondary);
+  height: var(--footer-height);
 }
 </style>

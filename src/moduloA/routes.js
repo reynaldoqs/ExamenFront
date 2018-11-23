@@ -20,6 +20,13 @@ export default [
         components: {
           moduloA: () => import('@/moduloA/views/Composicion.vue')
         }
+      },
+      {
+        path: 'perfil',
+        name: 'perfil',
+        components: {
+          moduloA: () => import('@/moduloA/views/Perfil.vue')
+        }
       }
     ]
   }

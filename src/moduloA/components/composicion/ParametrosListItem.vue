@@ -1,11 +1,12 @@
 <template>
     <div class="parametro-item">
         <div>
-            <vs-button @click="$emit('onSelect', parametro)" radius color="success" type="border" size="small" icon="add"></vs-button>
+            <vs-button @click="$emit('onSelect', parametro)" radius color="dark" class="add-parametro-btn" size="small" icon="add"></vs-button>
         </div>
        <div class="parametros-information">
             <div>
-                <h3>{{parametro.nombre}} </h3><span class="parametro-tipo">{{parametro.tipo}}</span>
+                <h3>{{parametro.nombre}} </h3>
+                <span class="parametro-tipo">{{parametro.tipo}}</span>
                 <p>{{parametro.descripcion}}</p>
             </div>
             <div>
@@ -43,16 +44,16 @@ export default {
 };
 </script>
 <style scoped>
-h3 {
+.parametros-information h3 {
   color: var(--text-color);
-  font-size: 1.4em;
+  font-size: 1.2em;
   font-weight: 400;
   line-height: 1.4em;
   display: inline-block;
 }
-p {
+.parametro-item p {
   color: #a1a1a1;
-  font-size: 1em;
+  font-size: 0.9em;
   line-height: 1.4em;
   font-weight: 400;
 }
@@ -77,7 +78,7 @@ p {
 .extra-inf {
   color: #717171;
   margin: 2px 0 14px 0;
-  font-size: 12px;
+  font-size: 0.85em;
 }
 .parametro-item {
   display: flex;
@@ -100,5 +101,9 @@ p {
   display: inline;
   color: #616161;
   font-size: 12px;
+}
+.add-parametro-btn {
+  background-color: var(--button-dark);
+  color: silver;
 }
 </style>

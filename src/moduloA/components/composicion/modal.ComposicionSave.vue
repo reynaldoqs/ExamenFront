@@ -42,7 +42,7 @@ export default {
 .vs-input:not(:last-child) {
   margin-bottom: 18px;
 }
-p {
+.guardar-composicion p {
   font-size: 15px;
   line-height: 22px;
   margin-bottom: 10px;

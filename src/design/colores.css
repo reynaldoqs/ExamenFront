@@ -12,13 +12,14 @@
     --info: #00aeff;
     --warning: #ffc168;
     --danger: #ff4f81;
-
+    --danger-iop: #ff4f81;
 
     --app-text-primary: rgb(46, 61, 73);
     --app-text-secondary: rgb(125, 151, 173);
 
 
     --dialog-bg:#232033;
+    --button-dark:#38324e;
 /*   --bg-content: #232033; */
     --bg-content: #2c2741;
     --bg-view:  #232033;

@@ -1,5 +1,20 @@
 <template>
     <div class="search-bar dark-theme">
+      <div class="search-bar-information">
+        <div>
+          <div class="search-avatar-img" :style="{backgroundImage:'url('+require('../../../assets/iop-'+currentPerfil.urlImagen+'.jpg')+')'}"> 
+          </div>
+        </div>
+        <div>
+          <span class="search-bar-user">
+            {{currentUser.accesos.usuario}}
+          </span>
+          <span class="search-bar-perfil">
+            {{currentPerfil.nombre}}
+          </span>
+        </div>
+      </div>
+       <hr class="separator">
         <vs-row
           class="search-options"
           vs-align="center"
@@ -42,7 +57,6 @@
         </vs-row>
         <hr class="separator">
         <vs-select
-            description-text="Selección de servicios"
             color="primary"
             class="full-size"
             v-model="filterBy"
@@ -108,15 +122,13 @@
                 class="small-list">
             {{ruta}}</span>
         </div>
-        <div class="gosht-div">
-          <pre>
-            {{parametrosEntrada}}
-          </pre>
-        </div>
+        <!-- <div class="gosht-div">
+        </div> -->
     </div>
 </template>
 <script>
 import Parametro from "./SearchBarParametro";
+import { mapGetters } from "vuex";
 export default {
   data: () => ({
     query: "",
@@ -135,6 +147,9 @@ export default {
   watch: {
     filterBy(newValue) {
       this.$emit("filterChange", this.filterBy);
+    },
+    searchBy(newValue) {
+      this.sendQuery();
     }
   },
   methods: {
@@ -176,14 +191,20 @@ export default {
           })
           .reduce((count, item) => [...count, ...item]);
 
-        return allParametros;
+        return allParametros.filter(
+          (item, pos) =>
+            allParametros.map(a => a.nombre).indexOf(item.nombre) == pos
+        );
       }
       return [];
     },
     serviciosSeleccionados() {
       if (this.composicionModel.rutas.length > 0) {
         let servicios = this.composicionModel.rutas.map(
-          ruta => ruta.servicio.nombre
+          ruta =>
+            ruta.servicio
+              ? ruta.servicio.nombre
+              : console.log("ruta sin servicio")
         );
         return servicios.filter((item, pos) => servicios.indexOf(item) == pos);
       }
@@ -194,7 +215,8 @@ export default {
         return this.composicionModel.rutas.map(ruta => ruta.ruta.nombre);
       }
       return [];
-    }
+    },
+    ...mapGetters(["currentUser", "currentPerfil"])
   },
   components: {
     Parametro
@@ -222,22 +244,51 @@ export default {
 }
 .small-list {
   color: #8181c1;
-  font-size: 0.9em;
+  font-size: 0.84em;
   cursor: pointer;
-  line-height: 1.8em;
+  line-height: 1.6em;
   display: block;
-  margin-right: 5px;
 }
 .small-list:hover {
   text-decoration: underline;
 }
-.small-list:not(:last-child)::after {
+/* .small-list:not(:last-child)::after {
   content: ", ";
+} */
+.search-avatar-img {
+  width: 100%;
+  height: 100%;
+  background-color: var(--iop-primary);
+  border-radius: 50%;
+  background-size: cover;
+  opacity: 0.5;
+  filter: grayscale(40%);
+  transition: 0.5s all ease;
 }
 .no-result-message {
   font-size: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
+  color: #717181;
+}
+.search-bar-information {
+  padding: 2px 10px 0 4px;
+  display: flex;
+  align-items: center;
+}
+.search-bar-information > div:first-child {
+  width: 40px;
+  height: 40px;
+}
+.search-bar-user {
+  display: block;
+  margin-left: 10px;
+  font-size: 0.9em;
+}
+.search-bar-perfil {
+  display: block;
+  margin-left: 10px;
+  font-size: 0.8em;
   color: #717181;
 }
 </style>

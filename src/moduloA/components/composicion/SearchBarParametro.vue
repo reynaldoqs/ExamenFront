@@ -42,11 +42,11 @@ export default {
 </script>
 <style scoped>
 .parametro {
-  background-color: red;
-  margin: 4px 4px;
+  opacity: 0.85;
+  margin: 3px 3px;
   display: inline-block;
   width: auto;
-  padding: 4px 4px 4px 10px;
+  padding: 2px 4px 2px 10px;
   border-radius: 15px;
 }
 
@@ -99,9 +99,9 @@ export default {
   background-color: var(--red);
 }
 .query {
-  background-color: var(--indigo);
+  background-color: var(--purple);
 }
 .param {
-  background-color: var(--purple);
+  background-color: var(--indigo);
 }
 </style>

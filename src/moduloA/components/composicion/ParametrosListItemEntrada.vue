@@ -37,7 +37,7 @@ export default {
 </script>
 <style scoped>
 .parametro {
-  background-color: var(--bg-inputs);
+  background-color: #2d2a38;
   margin: 4px 5px;
   display: inline-block;
   width: auto;

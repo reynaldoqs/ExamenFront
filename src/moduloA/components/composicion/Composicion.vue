@@ -1,6 +1,6 @@
 <template>
     <div class="composicion-container">
-       <div class="composicion-list">
+      <div class="composicion-list">
         <div class="left">
             <search-bar
             :composicionModel="composicionModel"
@@ -19,7 +19,7 @@
             @onSelect="selectParametro"
             />
         </div>
-       </div>
+      </div>
     </div>
 </template>
 <script>
@@ -198,28 +198,34 @@ export default {
 </script>
 
 <style scoped>
+.composicion-container {
+  width: 100%;
+  height: 100%;
+}
 .composicion-list {
+  width: 100%;
+  height: 100%;
   display: flex;
   --left-width: 480px;
 }
 .left {
   width: var(--left-width);
-  height: 100vh;
-  max-height: 100vh;
+  height: 100%;
+  max-height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
 }
 .right {
   width: calc(100% - var(--left-width));
-  height: 100vh;
-  max-height: 100vh;
+  height: 100%;
+  max-height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 }
 .save-option {
   position: fixed;
-  top: calc(100vh - 60px);
+  top: calc(100vh - 110px);
   left: calc(var(--left-width) - 60px);
 }
 </style>
