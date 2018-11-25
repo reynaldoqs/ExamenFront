@@ -7,7 +7,7 @@ import 'vuesax/dist/vuesax.css'
 let configuration = {
     theme: {
         colors: {
-            primary: '#600349',
+            primary: '#ed6d64',
             success: 'rgb(23, 201, 100)',
             danger: '#ff4f81',
             warning: '#fd7e14',

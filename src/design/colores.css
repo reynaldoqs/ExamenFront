@@ -20,6 +20,7 @@
 
     --dialog-bg:#232033;
     --button-dark:#38324e;
+    --bg-toolbar:#1B1B19;
 /*   --bg-content: #232033; */
     --bg-content: #2c2741;
     --bg-view:  #232033;
@@ -31,4 +32,5 @@
     --iop-primary:#360023;
     --iop-secondary:#ed6d64;
     --iop-accent:#600349;
+
 }

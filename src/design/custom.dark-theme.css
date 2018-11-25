@@ -84,3 +84,12 @@ body .con-vs-dialog .vs-dialog .vs-dialog-text {
   margin: 20px 0;
   display: block;
 }
+/* Estilos para el toolbar */
+body .vs-dropdown--menu{
+  background-color: var(--bg-toolbar);
+  border: none;
+  width: 140px;
+}
+body .vs-dropdown--menu:after {
+  display: none;
+}
