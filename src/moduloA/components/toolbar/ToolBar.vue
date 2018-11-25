@@ -8,6 +8,11 @@
                             <img src="../../../assets/logo agetic blanco.png" alt=""> 
                         </div>
                     </li>
+                    <li>
+                        <div class="img-toolbar">
+                            <img class="logo-iop" src="../../../assets/iop.png" alt=""> 
+                        </div>
+                    </li>
                 </ul>
             </div>
             <div class="toolbar-right-options">
@@ -67,5 +72,8 @@ export default {
 }
 #toolbar .img-toolbar >img{
     width: 110px;
+}
+#toolbar .logo-iop{
+    width: 60px!important;
 }
 </style>
