@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import GuardarComposicion from "@/moduloA/components/composicion/modal.ComposicionSave";
 export default {
   data() {
     return {
@@ -37,7 +36,6 @@ export default {
     }
   },
   components: {
-    "guardar-composicion": GuardarComposicion
   },
   methods: {
     acceptAlert(color) {
