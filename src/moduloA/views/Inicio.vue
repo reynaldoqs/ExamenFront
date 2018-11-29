@@ -1,5 +1,6 @@
 <template>
-  <div>
-    <h1>Modulo a inicio</h1>
-  </div>
+  <q-jumbotron>
+    <div class="q-display-3">Módulo B - inicio</div>
+  </q-jumbotron>
 </template>
+

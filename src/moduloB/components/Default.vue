@@ -1,6 +1,5 @@
 <template>
   <q-jumbotron>
-    <div class="q-display-3">Módulo A - Login</div>
+    <div class="q-display-3">Pantalla inicio</div>
   </q-jumbotron>
 </template>
-
